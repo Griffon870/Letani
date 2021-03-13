@@ -1,5 +1,7 @@
 package cz.vkr.dto;
 
+import cz.vkr.cons.Konstatnty;
+
 public abstract class Letoun {
 
 	private String registrace;
@@ -7,20 +9,17 @@ public abstract class Letoun {
 	private int rozpeti;
 	private int cenaLetoveHodiny;
 	private int vne;
+	private int cenaLetadla;
 	
-	
-	
-	
-	
-	
-	
-	public Letoun(String registrace, String nazev, int rozpeti, int cenaLetoveHodiny, int vne) {
+		
+	public Letoun(String registrace, String nazev, int rozpeti, int cenaLetoveHodiny, int vne, int cenaLetadla) {
 		super();
 		this.registrace = registrace;
 		this.nazev = nazev;
 		this.rozpeti = rozpeti;
 		this.cenaLetoveHodiny = cenaLetoveHodiny;
 		this.vne = vne;
+		this.cenaLetadla = cenaLetadla;
 	}
 	public String getRegistrace() {
 		return registrace;
@@ -52,8 +51,19 @@ public abstract class Letoun {
 	public void setVne(int vne) {
 		this.vne = vne;
 	}
+	public int getCenaLetadla() {
+		return cenaLetadla;
+	}
+	public void setCenaLetadla(int cenaLetadla) {
+		this.cenaLetadla = cenaLetadla;
+	}
 	
 	
+	public String getFormatovanaCenaLetadla() {
+		
+		return getCenaLetadla()+Konstatnty.CESKA_KORUNA;
+		
+	}
 	
 	
 	

@@ -56,22 +56,16 @@ public class Draha {
 		this.magnetickySmer = magnetickySmer;
 	}
 	
-	
-	
+		
 	@Override
 	public String toString() {
 		String info = "Informace o dráze: "+getNazev()+"\n";
-		info+="-Nazev: "+getNazev()+"\n";
-		info+="-Delka: "+getDelka()+"\n";
-		info+="-Sirka: "+getSirka()+"\n";
-		info+="-Povrch: "+getPovrch()+"\n";
-		info+="-Okruh: "+getOkruh()+"\n";
-		info+="-Magneticky smer: "+getMagnetickySmer()+"\n";
+		info+="Nazev: "+getNazev();
+		info+=", Delka: "+getDelka();
+		info+=", Sirka: "+getSirka();
+		info+=", Povrch: "+getPovrch();
+		info+=", Okruh: "+getOkruh();
+		info+=", Magneticky smer: "+getMagnetickySmer();
 		return info;
-	}
-	
-	
-	
-	
-	
+	}	
 }
