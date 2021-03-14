@@ -1,14 +1,9 @@
 package cz.vkr.letani;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.stream.Collectors;
-
 import cz.vkr.databaze.SimulaceDatabaze;
 import cz.vkr.dto.Letiste;
 import cz.vkr.dto.Letoun;
-import cz.vkr.dto.Vetron;
 import cz.vkr.enums.Povrch;
 
 
@@ -54,25 +49,24 @@ public class HlavniProgram {
 		
 		
 		
-		// pak si uz fakt muzes vymyslet jakoukoliv kravinu...  
-		
-		// chci vsechny vetrone:
-		ArrayList<Vetron> vsechnyVetrone = mojeLetiste.getVetrone();
-		
+		// pak si uz fakt muzes vymyslet jakoukoliv kravinu...  	
 		
 		//chci najit nejlevnejsi letadlo ze vsech na letisti:
 		
-		Collections.sort(mojeLetiste.getLetadla(), Letoun.LetounCenaComparator);
-		Letoun l = mojeLetiste.getLetadla().get(0);
-		System.out.println("Nejlevnejsi letadlo na letisti: "+l.toString());
+		Collections.sort(mojeLetiste.getLetadla(), Letoun.LetounCenaComparator);	// seradim seznam letadel podle ceny
+	
+		
+		System.out.println("Nejlevnejsi letadlo na letisti: "+mojeLetiste.getLetadla().get(0).toString());
+		System.out.println("Nejdrazsi letadlo na letisti: "+mojeLetiste.getLetadla().get(mojeLetiste.getLetadla().size()-1).toString());
 		
 		
-	//	System.out.println("\n\n\n********************  Vypis informaci po blbnuti s datama  *******************");
-		//System.out.println(mojeLetiste.toString());	 
+		//Chci najit nejdrazsiho vetrone (PW je prodano ;-) ): 
+		Collections.sort(mojeLetiste.getVetrone(), Letoun.LetounCenaComparator);
+		System.out.println("Nejdrazsi vetron: "+mojeLetiste.getVetrone().get(mojeLetiste.getVetrone().size()-1).toString());
 		
+		System.out.println("\n\n\n********************  Vypis informaci po blbnuti s datama  *******************");
+		System.out.println(mojeLetiste.toString());	 
 		
-
-
 	}
 
 
