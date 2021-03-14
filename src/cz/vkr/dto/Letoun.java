@@ -1,5 +1,7 @@
 package cz.vkr.dto;
 
+import java.util.Comparator;
+
 import cz.vkr.cons.Konstatnty;
 
 public abstract class Letoun {
@@ -66,8 +68,26 @@ public abstract class Letoun {
 	}
 	
 	
-	
-	
+	public static Comparator<Letoun> LetounNazevComparator = new Comparator<Letoun>() {
+
+		public int compare(Letoun l1, Letoun l2) {
+		   String letounNazev1 = l1.getNazev().toUpperCase();
+		   String letounNazev2 = l2.getNazev().toUpperCase();
+
+		   return letounNazev1.compareTo(letounNazev2);		  
+	    }};
+
+	    
+	    public static Comparator<Letoun> LetounCenaComparator = new Comparator<Letoun>() {
+
+		public int compare(Letoun l1, Letoun l2) {
+
+		   int cena1 = l1.getCenaLetadla();
+		   int cena2 = l2.getCenaLetadla();
+
+		   return cena1-cena2;
+
+	   }};
 	
 	
 	

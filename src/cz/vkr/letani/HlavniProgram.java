@@ -1,9 +1,13 @@
 package cz.vkr.letani;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 import cz.vkr.databaze.SimulaceDatabaze;
 import cz.vkr.dto.Letiste;
+import cz.vkr.dto.Letoun;
 import cz.vkr.dto.Vetron;
 import cz.vkr.enums.Povrch;
 
@@ -52,16 +56,23 @@ public class HlavniProgram {
 		
 		// pak si uz fakt muzes vymyslet jakoukoliv kravinu...  
 		
+		// chci vsechny vetrone:
 		ArrayList<Vetron> vsechnyVetrone = mojeLetiste.getVetrone();
 		
 		
+		//chci najit nejlevnejsi letadlo ze vsech na letisti:
+		
+		Collections.sort(mojeLetiste.getLetadla(), Letoun.LetounCenaComparator);
+		Letoun l = mojeLetiste.getLetadla().get(0);
+		System.out.println("Nejlevnejsi letadlo na letisti: "+l.toString());
 		
 		
+	//	System.out.println("\n\n\n********************  Vypis informaci po blbnuti s datama  *******************");
+		//System.out.println(mojeLetiste.toString());	 
 		
 		
-		System.out.println("\n\n\n********************  Vypis informaci po blbnuti s datama  *******************");
-		System.out.println(mojeLetiste.toString());	 
-		
+
+
 	}
 
 
