@@ -127,6 +127,8 @@ public class Letiste {
 		letadla.add(new Vetron(registrace, nazev, rozpeti, cenaLetoveHodiny, vne, cena, klouzak, vodnik, samostart,
 				klapka));
 	}
+	
+
 
 	/**
 	 * Vyhleda a vrati drahu podle nazvu
