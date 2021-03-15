@@ -35,29 +35,31 @@ public class Letiste {
 		pocasi = new Pocasi();
 	}
 
+	/**
+	 * metoda vrati drahu v pouzivani podle aktualniho pocasi na letisti
+	 * @return
+	 */
 	public Draha getDrahaVPouzivani() {
 
+		// vytvorim Mapu drah
 		TreeMap<Integer, Draha> drahyTreeMap = new TreeMap<Integer, Draha>();
 
+		// naplnim mapu drah z arraylistu drahoveho systemu. Jako klic pouziju magneticky sever dane drahy
 		for (Draha draha : drahy) {
 			drahyTreeMap.put(draha.getMagnetickySmer(), draha);
-		//	drahyTreeMap.put(360 - draha.getMagnetickySmer(), draha);
 		}	
 		
-		// najit drahu nejbliz severu:				
+		// Ted je potreba najit nejsevernejsi drahu a nastavit ji s klicem 0 i 360:
+		// seradim arraylist podle magnetickeho severu
 		Collections.sort(drahy, Draha.DrahaSmerComparator);
+		// prvni potencialni draha smerujici na sever
 		Draha moznaSeverni1 = drahy.get(0);
-		Draha moznaSeverni2 = drahy.get(drahy.size()-1);
+		// druha potencialni draha smerujici na sever
+		Draha moznaSeverni2 = drahy.get(drahy.size()-1);		
 		
-		int a1 = 0-moznaSeverni1.getMagnetickySmer();
-		int b1 = 360-moznaSeverni1.getMagnetickySmer();
-		
-		int c1 = Math.min(a1, b1);
-		
-		int a2 = 0-moznaSeverni2.getMagnetickySmer();
-		int b2 = 360-moznaSeverni2.getMagnetickySmer();
-		
-		int c2 = Math.min(a2, b2);
+		// zjistitm ktera je ta nejseverneji natocena + naleju ji do mapy
+		int c1 = Math.min(0-moznaSeverni1.getMagnetickySmer(), 360-moznaSeverni1.getMagnetickySmer());		
+		int c2 = Math.min(0-moznaSeverni2.getMagnetickySmer(), 360-moznaSeverni2.getMagnetickySmer());
 		
 		if(c1<c2) {
 			drahyTreeMap.put(0, moznaSeverni1);
@@ -74,6 +76,7 @@ public class Letiste {
 
 		int nejblizsiKlic = pocasi.getVitr().getSmer() - nize > vyse - pocasi.getVitr().getSmer() ? vyse : nize;
 
+		// z metody vracim drahu, ktera odpovida klici
 		return drahyTreeMap.get(nejblizsiKlic);
 	}
 
