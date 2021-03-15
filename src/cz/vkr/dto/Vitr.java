@@ -4,19 +4,16 @@ public class Vitr {
 
 	
 	private int smer;
-	private int rychlost;
+	private double rychlost;
+	private double narazy;
 	
 	
 	
-	
-	
-	
-	
-	
-	public Vitr(int smer, int rychlost) {
+	public Vitr(int smer, double rychlost, double narazy) {
 		super();
 		this.smer = smer;
 		this.rychlost = rychlost;
+		this.narazy = narazy;
 	}
 	public int getSmer() {
 		return smer;
@@ -24,13 +21,23 @@ public class Vitr {
 	public void setSmer(int smer) {
 		this.smer = smer;
 	}
-	public int getRychlost() {
+	public double getRychlost() {
 		return rychlost;
 	}
-	public void setRychlost(int rychlost) {
+	public void setRychlost(double rychlost) {
 		this.rychlost = rychlost;
 	}
+	public double getNarazy() {
+		return narazy;
+	}
+	public void setNarazy(double narazy) {
+		this.narazy = narazy;
+	}
 	
+	@Override
+	public String toString() {
+		return "Vitr: "+"smer:"+getSmer()+", rychlost:"+getRychlost()+", narazy:"+getNarazy();
+	}
 	
 	
 	

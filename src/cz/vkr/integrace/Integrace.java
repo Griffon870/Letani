@@ -8,10 +8,13 @@ import java.net.URLConnection;
 
 import org.json.JSONObject;
 
+import cz.vkr.dto.Vitr;
+
 public class Integrace {
 
-	public static int getRealnyVitr() {
+	public static Vitr getRealnyVitr() {
 
+		Vitr vitr = null;
 		URL url = null;
 		String l = "";
 		try {
@@ -49,8 +52,10 @@ public class Integrace {
 	//	System.out.println(json.toString());  
 		double wind = json.getJSONObject("wind").getDouble("deg");
 			
+	
+		vitr = new Vitr((int)json.getJSONObject("wind").getDouble("deg"), json.getJSONObject("wind").getDouble("speed"), json.getJSONObject("wind").getDouble("gust"));
 
-		return (int) wind;
+		return vitr;
 	}
 
 }

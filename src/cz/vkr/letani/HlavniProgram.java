@@ -71,8 +71,8 @@ public class HlavniProgram {
 		System.out.println(mojeLetiste.toString());
 
 		// nastavime vitr:
-		mojeLetiste.getPocasi().setVitr(new Vitr(Integrace.getRealnyVitr(), 5));
-		System.out.println("Smer vetru: " + mojeLetiste.getPocasi().getVitr().getSmer());
+		mojeLetiste.getPocasi().setVitr(Integrace.getRealnyVitr());
+		System.out.println(mojeLetiste.getPocasi().getVitr().toString());
 		System.out.println("Draha v pouzivani: " + mojeLetiste.getDrahaVPouzivani().getNazev());
 
 
