@@ -41,7 +41,7 @@ public class Letiste {
 
 		for (Draha draha : drahy) {
 			drahyTreeMap.put(draha.getMagnetickySmer(), draha);
-			drahyTreeMap.put(360 - draha.getMagnetickySmer(), draha);
+		//	drahyTreeMap.put(360 - draha.getMagnetickySmer(), draha);
 		}	
 		
 		// najit drahu nejbliz severu:				
