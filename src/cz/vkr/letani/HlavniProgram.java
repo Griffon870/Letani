@@ -4,6 +4,7 @@ import java.util.Collections;
 import cz.vkr.databaze.SimulaceDatabaze;
 import cz.vkr.dto.Letiste;
 import cz.vkr.dto.Letoun;
+import cz.vkr.dto.Vitr;
 import cz.vkr.enums.Povrch;
 
 
@@ -66,6 +67,11 @@ public class HlavniProgram {
 		
 		System.out.println("\n\n\n********************  Vypis informaci po blbnuti s datama  *******************");
 		System.out.println(mojeLetiste.toString());	 
+		
+		// nastavime vitr: 
+		mojeLetiste.getPocasi().setVitr(new Vitr(40,5));		
+		System.out.println("Smer vetru: "+mojeLetiste.getPocasi().getVitr().getSmer());
+		System.out.println("Draha v pouzivani: "+ mojeLetiste.getDrahaVPouzivani().getNazev());
 		
 	}
 

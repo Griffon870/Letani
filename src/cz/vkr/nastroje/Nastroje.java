@@ -1,5 +1,7 @@
 package cz.vkr.nastroje;
 
+import java.util.Map;
+
 import cz.vkr.cons.Konstatnty;
 
 public class Nastroje {
@@ -9,4 +11,6 @@ public class Nastroje {
 		return vstup?Konstatnty.ANO:Konstatnty.NE;		 // :-) 
 
 	}
+	
+	      
 }

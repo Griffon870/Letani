@@ -1,6 +1,9 @@
 package cz.vkr.dto;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 import cz.vkr.enums.Okruh;
 import cz.vkr.enums.Povrch;
@@ -12,9 +15,12 @@ public class Letiste {
 	private String frekvence;
 	private ArrayList<Draha> drahy;
 	private ArrayList<Letoun> letadla;
+	private Pocasi pocasi;
 
 	/**
-	 * konstruktor, ktery nema list drah a list letadel - ty se pak pridavaji pomoci setteru
+	 * konstruktor, ktery nema list drah a list letadel - ty se pak pridavaji pomoci
+	 * setteru
+	 * 
 	 * @param nazev
 	 * @param sluzba
 	 * @param frekvence
@@ -26,10 +32,54 @@ public class Letiste {
 		this.frekvence = frekvence;
 		letadla = new ArrayList<Letoun>();
 		drahy = new ArrayList<Draha>();
+		pocasi = new Pocasi();
+	}
+
+	public Draha getDrahaVPouzivani() {
+
+		TreeMap<Integer, Draha> drahyTreeMap = new TreeMap<Integer, Draha>();
+
+		for (Draha draha : drahy) {
+			drahyTreeMap.put(draha.getMagnetickySmer(), draha);
+			drahyTreeMap.put(360 - draha.getMagnetickySmer(), draha);
+		}	
+		
+		// najit drahu nejbliz severu:				
+		Collections.sort(drahy, Draha.DrahaSmerComparator);
+		Draha moznaSeverni1 = drahy.get(0);
+		Draha moznaSeverni2 = drahy.get(drahy.size()-1);
+		
+		int a1 = 0-moznaSeverni1.getMagnetickySmer();
+		int b1 = 360-moznaSeverni1.getMagnetickySmer();
+		
+		int c1 = Math.min(a1, b1);
+		
+		int a2 = 0-moznaSeverni2.getMagnetickySmer();
+		int b2 = 360-moznaSeverni2.getMagnetickySmer();
+		
+		int c2 = Math.min(a2, b2);
+		
+		if(c1<c2) {
+			drahyTreeMap.put(0, moznaSeverni1);
+			drahyTreeMap.put(360, moznaSeverni1);
+		}
+		else {
+			drahyTreeMap.put(0, moznaSeverni2);
+			drahyTreeMap.put(360, moznaSeverni2);
+		}	
+
+		// ted hledam v mape nejblizsi hodnotu ke klici
+		int vyse= drahyTreeMap.ceilingKey(pocasi.getVitr().getSmer());
+		int nize= drahyTreeMap.floorKey(pocasi.getVitr().getSmer());
+
+		int nejblizsiKlic = pocasi.getVitr().getSmer() - nize > vyse - pocasi.getVitr().getSmer() ? vyse : nize;
+
+		return drahyTreeMap.get(nejblizsiKlic);
 	}
 
 	/**
 	 * Prida novou drahu do systemu drah
+	 * 
 	 * @param nazev
 	 * @param delka
 	 * @param sirka
@@ -39,10 +89,11 @@ public class Letiste {
 	 */
 	public void addDraha(String nazev, int delka, int sirka, String povrch, String okruh, int magnetickySmer) {
 		drahy.add(new Draha(nazev, delka, sirka, povrch, okruh, magnetickySmer));
-	}	
-	
+	}
+
 	/**
-	 * metoda pro pridani motorovyho letadla 
+	 * metoda pro pridani motorovyho letadla
+	 * 
 	 * @param registrace
 	 * @param nazev
 	 * @param rozpeti
@@ -50,12 +101,14 @@ public class Letiste {
 	 * @param vne
 	 * @param palivo
 	 */
-	public void addLetadlo(String registrace, String nazev, int rozpeti, int cenaLetoveHodiny, int vne,int cena,  String palivo) {
-		letadla.add(new Motorak(registrace, nazev, rozpeti, cenaLetoveHodiny, vne,cena, palivo));
+	public void addLetadlo(String registrace, String nazev, int rozpeti, int cenaLetoveHodiny, int vne, int cena,
+			String palivo) {
+		letadla.add(new Motorak(registrace, nazev, rozpeti, cenaLetoveHodiny, vne, cena, palivo));
 	}
-	
+
 	/**
 	 * Pretizena! metoda pro pridani vetrone
+	 * 
 	 * @param registrace
 	 * @param nazev
 	 * @param rozpeti
@@ -66,67 +119,71 @@ public class Letiste {
 	 * @param samostart
 	 * @param klapka
 	 */
-	public void addLetadlo (String registrace, String nazev, int rozpeti, int cenaLetoveHodiny, int vne,int cena, int klouzak, boolean vodnik, boolean samostart, boolean klapka) {
-		letadla.add(new Vetron(registrace, nazev, rozpeti, cenaLetoveHodiny, vne,cena, klouzak, vodnik, samostart, klapka));
+	public void addLetadlo(String registrace, String nazev, int rozpeti, int cenaLetoveHodiny, int vne, int cena,
+			int klouzak, boolean vodnik, boolean samostart, boolean klapka) {
+		letadla.add(new Vetron(registrace, nazev, rozpeti, cenaLetoveHodiny, vne, cena, klouzak, vodnik, samostart,
+				klapka));
 	}
-	
-	
-	
+
 	/**
 	 * Vyhleda a vrati drahu podle nazvu
+	 * 
 	 * @param nazev
 	 * @return
 	 */
 	public Draha getDrahaPodleNazvu(String nazev) {
-	
+
 		for (Draha draha : drahy) {
-			if(draha.getNazev().equals(nazev)) {
+			if (draha.getNazev().equals(nazev)) {
 				return draha;
 			}
-		}		
-		return null;		
+		}
+		return null;
 	}
-	
-	
+
 	/**
-	 * Zajimava metoda.....  v listu letadel mam instance i motoraku i vetronu! je to jeden pytel.
+	 * Zajimava metoda..... v listu letadel mam instance i motoraku i vetronu! je to
+	 * jeden pytel.
+	 * 
 	 * @return
 	 */
 	public ArrayList<Vetron> getVetrone() {
 		ArrayList<Vetron> vetrone = new ArrayList<Vetron>();
-		
+
 		for (Letoun letoun : letadla) {
-			if (letoun instanceof Vetron) vetrone.add((Vetron)letoun);
+			if (letoun instanceof Vetron)
+				vetrone.add((Vetron) letoun);
 		}
 		return vetrone;
 	}
-	
+
 	public ArrayList<Motorak> getMotoraky() {
 		ArrayList<Motorak> motoraky = new ArrayList<Motorak>();
-		
+
 		for (Letoun letoun : letadla) {
-			if (letoun instanceof Motorak) motoraky.add((Motorak)letoun);
+			if (letoun instanceof Motorak)
+				motoraky.add((Motorak) letoun);
 		}
 		return motoraky;
 	}
-	
+
 	/**
-	 * neni hezky napsany 
+	 * neni hezky napsany
+	 * 
 	 * @param registrace
 	 */
 	public void odeberLetadloPodleRegistrace(String registrace) {
 		int poziceProSmazani = -1;
 		for (int i = 0; i < letadla.size(); i++) {
-			if(letadla.get(i).getRegistrace().equals(registrace)) {
+			if (letadla.get(i).getRegistrace().equals(registrace)) {
 				poziceProSmazani = i;
-			}			
+			}
 		}
-		if(poziceProSmazani != -1) {
-		letadla.remove(poziceProSmazani);
+		if (poziceProSmazani != -1) {
+			letadla.remove(poziceProSmazani);
 		}
-		
+
 	}
-	
 
 	public String getNazev() {
 		return nazev;
@@ -168,6 +225,14 @@ public class Letiste {
 		this.letadla = letadla;
 	}
 
+	public Pocasi getPocasi() {
+		return pocasi;
+	}
+
+	public void setPocasi(Pocasi pocasi) {
+		this.pocasi = pocasi;
+	}
+
 	@Override
 	public String toString() {
 
@@ -175,23 +240,23 @@ public class Letiste {
 		int pocetLetadel = getLetadla().size();
 
 		String ret = "Informace o letisti: " + getNazev() + ":\n";
-		ret+="Sluzba: "+getSluzba()+"\n";
-		ret+="Frekvence: "+getFrekvence()+"\n";
+		ret += "Sluzba: " + getSluzba() + "\n";
+		ret += "Frekvence: " + getFrekvence() + "\n";
 		ret += "Pocet drah na letisti: " + pocetDrah + "\n";
 		ret += "Pocet letadel na letisti: " + pocetLetadel + "\n";
-		
-		ret+="\n------------------------------------------ DRAHY -------------------------------------------------\n";
+
+		ret += "\n------------------------------------------ DRAHY -------------------------------------------------\n";
 		if (pocetDrah > 0) {
 			for (Draha draha : drahy) {
 				ret += draha.toString() + "\n";
 			}
 		}
-		ret+="\n------------------------------------------LETADLA-------------------------------------------------\n";
+		ret += "\n------------------------------------------LETADLA-------------------------------------------------\n";
 		if (pocetLetadel > 0) {
 			for (Letoun ero : letadla) {
 				ret += ero.toString() + "\n";
 			}
-		}						
+		}
 		return ret;
 	}
 }

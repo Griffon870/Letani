@@ -1,5 +1,7 @@
 package cz.vkr.dto;
 
+import java.util.Comparator;
+
 public class Draha {
 
 	private String nazev; // neni to int, muze byt napriklad 23L
@@ -56,6 +58,9 @@ public class Draha {
 		this.magnetickySmer = magnetickySmer;
 	}
 	
+	
+	
+	
 		
 	@Override
 	public String toString() {
@@ -68,4 +73,19 @@ public class Draha {
 		info+=", Magneticky smer: "+getMagnetickySmer();
 		return info;
 	}	
+	
+	
+	
+	public static Comparator<Draha> DrahaSmerComparator = new Comparator<Draha>() {
+
+		public int compare(Draha d1, Draha d2) {
+
+			int smer1 = d1.getMagnetickySmer();
+			int smer2 = d2.getMagnetickySmer();
+
+			return smer1 - smer2;
+		}
+	};
+	
+	
 }
